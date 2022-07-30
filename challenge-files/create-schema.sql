@@ -1,53 +1,52 @@
+---------------------------------
+--- drop tables for a fresh start
+---------------------------------
 DROP TABLE IF EXISTS "transaction" CASCADE;
 DROP TABLE IF EXISTS card_holder CASCADE;
 DROP TABLE IF EXISTS credit_card CASCADE;
 DROP TABLE IF EXISTS merchant CASCADE;
 DROP TABLE IF EXISTS merchant_category CASCADE;
 
+---------------------------------
+--- create the tables
+---------------------------------
 CREATE TABLE "transaction" (
     id INT NOT NULL,
     "date" TIMESTAMP NOT NULL,
     amount FLOAT NOT NULL,
     card VARCHAR(20) NOT NULL,
     id_merchant INT NOT NULL,
-    CONSTRAINT pk_transaction PRIMARY KEY (
-        id
-    )
+    CONSTRAINT pk_transaction PRIMARY KEY (id)
 );
 
 CREATE TABLE card_holder (
     id INT NOT NULL,
     "name" VARCHAR(20) NOT NULL,
-    CONSTRAINT pk_card_holder PRIMARY KEY (
-        id
-    )
+    CONSTRAINT pk_card_holder PRIMARY KEY (id)
 );
 
 CREATE TABLE credit_card (
     card VARCHAR(20) NOT NULL,
     cardholder_id INT NOT NULL,
-    CONSTRAINT pk_credit_card PRIMARY KEY (
-        card
-    )
+    CONSTRAINT pk_credit_card PRIMARY KEY (card)
 );
 
 CREATE TABLE merchant (
     id INT NOT NULL,
     "name" VARCHAR(30) NOT NULL,
     id_merchant_category INT NOT NULL,
-    CONSTRAINT pk_merchant PRIMARY KEY (
-        id
-    )
+    CONSTRAINT pk_merchant PRIMARY KEY (id)
 );
 
 CREATE TABLE merchant_category (
     id INT NOT NULL,
     "name" VARCHAR(20) NOT NULL,
-    CONSTRAINT pk_merchant_category PRIMARY KEY (
-        id
-    )
+    CONSTRAINT pk_merchant_category PRIMARY KEY (id)
 );
 
+---------------------------------
+--- specify foreign keys
+---------------------------------
 ALTER TABLE "transaction" ADD CONSTRAINT fk_transaction_card FOREIGN KEY(card)
 REFERENCES credit_card (card);
 
